@@ -15,5 +15,6 @@ RUN composer install --no-dev --optimize-autoloader
 # Copy Nginx configuration
 
 # Expose application port
-EXPOSE 80
+EXPOSE 10000
+
 
