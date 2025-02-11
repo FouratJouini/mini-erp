@@ -44,9 +44,23 @@ class Article
     #[ORM\ManyToMany(targetEntity: Operation::class, mappedBy: 'Articles')]
     private Collection $operations;
 
+    /**
+     * @var Collection<int, Achat>
+     */
+    #[ORM\ManyToMany(targetEntity: Achat::class, mappedBy: 'Articles')]
+    private Collection $achats;
+
+    /**
+     * @var Collection<int, Vente>
+     */
+    #[ORM\ManyToMany(targetEntity: Vente::class, mappedBy: 'Articles')]
+    private Collection $ventes;
+
     public function __construct()
     {
         $this->operations = new ArrayCollection();
+        $this->achats = new ArrayCollection();
+        $this->ventes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -173,5 +187,59 @@ class Article
     public function __toString(): string
     {
         return $this->libelle;
+    }
+
+    /**
+     * @return Collection<int, Achat>
+     */
+    public function getAchats(): Collection
+    {
+        return $this->achats;
+    }
+
+    public function addAchat(Achat $achat): static
+    {
+        if (!$this->achats->contains($achat)) {
+            $this->achats->add($achat);
+            $achat->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAchat(Achat $achat): static
+    {
+        if ($this->achats->removeElement($achat)) {
+            $achat->removeArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Vente>
+     */
+    public function getVentes(): Collection
+    {
+        return $this->ventes;
+    }
+
+    public function addVente(Vente $vente): static
+    {
+        if (!$this->ventes->contains($vente)) {
+            $this->ventes->add($vente);
+            $vente->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVente(Vente $vente): static
+    {
+        if ($this->ventes->removeElement($vente)) {
+            $vente->removeArticle($this);
+        }
+
+        return $this;
     }
 }

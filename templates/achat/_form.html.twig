@@ -1,0 +1,57 @@
+<!-- filepath: /D:/workspace/caisse/templates/achat/_form.html.twig -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achat Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <form action="{{ path('app_achat_new') }}" method="post" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="articles">Articles:</label>
+                <select name="articles" id="articles" class="form-control" required>
+                    <option value="">Select an article</option>
+                    {% for article in articles %}
+                        <option value="{{ article.id }}" data-pg="{{ article.PrixGros}}" data-pd="{{ article.PrixDetail}}">{{ article.libelle }}</option>
+                    {% endfor %}
+                </select>
+                <div class="invalid-feedback">Please select an article.</div>
+            </div>
+
+            <div id="articlesPannel" class="mb-3"></div>
+
+            <div class="form-group">
+                <label for="transport">Transport:</label>
+                <input type="text" id="transport_base" name="transport_base" placeholder="base" class="form-control mb-2">
+                <input type="text" id="transport_taux" name="transport_taux" placeholder="taux %" value="7" class="form-control mb-2">
+                <input type="text" id="transport_total" name="transport_total" placeholder="total" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label for="timbre">Timbre:</label>
+                <input type="text" id="timbre" name="timbre" value="1" readonly class="form-control">
+            </div>
+
+            <div id="grandTotalPannel" class="form-group" style="display: none;">
+                <label for="grandTotal">Grand Total:</label>
+                <span id="grandTotalSpan"></span>
+                <input type="text" id="grandTotal" name="grandTotal" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Commentaire:</label>
+                <input type="text" id="description" name="description" class="form-control">
+            </div>
+            <div align="center">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
